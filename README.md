@@ -15,15 +15,16 @@
 
 <hr>
 
+
 # **Survival Analysis of Chlorhexidine Trial Outcomes Using Python** 🧪📈
 
 This project is based on a real clinical trial titled  
-**“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12 percent and 0.2 percent Concentration on Incidence of VAP”**  
-published in *Annals of International Medical and Dental Research (2021)*.  
-The complete article is included as  
-**/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf**.
+**“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12 percent and 0.2 percent Concentration on Incidence of VAP”**,  
+published in *Annals of International Medical and Dental Research, Vol (7), Issue (3), 2021*.  
+The full article is included as **Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf**  
+(Local path: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`)
 
-This repository analyses **time-to-VAP (Ventilator-Associated Pneumonia)** using classical Survival Analysis methods in Python. All results, tables, and plots are generated via **Chlorhexidine_Trials.ipynb**.
+This repository reproduces and interprets **time-to-VAP (Ventilator-Associated Pneumonia)** outcomes using classical Survival Analysis methods in Python. All results, tables and plots are generated using **Chlorhexidine_Trials.ipynb**.
 
 ---
 
@@ -34,101 +35,104 @@ This repository analyses **time-to-VAP (Ventilator-Associated Pneumonia)** using
 
 ## **2️⃣ Project Summary** ✍️
 
-This project evaluates **0.12% vs 0.20% chlorhexidine** in preventing VAP in ventilated ICU patients.
+This project analyzes patient-level data from a randomized controlled trial comparing **0.12% vs 0.20% chlorhexidine** mouthwash for preventing VAP in mechanically ventilated ICU patients.
 
-- **Outcome:** Days until VAP (event = 1) or censoring (0).  
-- **Need for survival analysis:** Follow-up varies and censoring is high.  
-- **Methods used:** Kaplan–Meier curves, Log-Rank test, Cox PH model, Schoenfeld residual checks.
+- **Outcome:** Time (days) until VAP (event = 1), with censoring for discharge, death or LAMA.  
+- **Why survival analysis:** Different follow-up durations and heavy censoring require time-to-event models.  
+- **Learning outcomes:** Kaplan–Meier curves, Log-Rank test, Cox Proportional Hazards model, Schoenfeld residual checks and clinical interpretation.
 
 ---
 
 ## **3️⃣ Dataset Description** 📚
 
-- **Source:** Randomized controlled trial (140 patients).  
-- **Working dataset:** Cleaned file `Raw Data from Chlorhexidine Trial.xlsx`.
+- **Source:** Randomized controlled trial with 140 ICU patients.  
+- **Working dataset:** Cleaned version derived from `Raw Data form Chlorhexidine Trial.xlsx`.
 
 ### **Core Variables**
 | Column | Description | Type |
 | ------ | ----------- | ---- |
-| Age | Years | Continuous |
+| Age | Age in years | Continuous |
 | Gender | Male / Female | Categorical |
 | TrialArm_num | 1 = 0.12%, 2 = 0.20% | Categorical |
-| APACHEII | Severity score | Continuous |
-| TLC_D1 | Day-1 total leukocyte count | Continuous |
-| time | Time to VAP / censor | Continuous |
+| APACHEII | APACHE II severity score | Continuous |
+| TLC_D1 | Day-1 leukocyte count | Continuous |
+| time | Time to VAP or censoring | Continuous |
 | event | 1 = VAP, 0 = NO VAP | Binary |
 
 ---
 
 ## **4️⃣ Problem Statement** ❓
 
-1. Does 0.20% chlorhexidine reduce hazard of VAP compared to 0.12%?  
-2. Are VAP-free survival curves significantly different between arms?  
-3. Do Age, APACHE II, TLC Day 1, or Gender influence time-to-VAP?  
-4. What does the Log-Rank test show?  
-5. What do Cox PH hazard ratios indicate clinically?
+This project answers the following clinical questions:
+
+1. Does 0.20% chlorhexidine reduce VAP risk compared to 0.12%?  
+2. Is VAP-free survival different between treatment arms?  
+3. Do Age, APACHE II, TLC Day 1 or Gender influence time to VAP?  
+4. Are survival curves significantly different on Log-Rank test?  
+5. How do hazard ratios from the Cox PH model inform clinical interpretation?
 
 ---
 
 ## **5️⃣ Objectives** 🎯
 
-1. Clean and preprocess data  
-2. Perform EDA and baseline summaries  
-3. Estimate KM curves (overall and by arm)  
-4. Conduct Log-Rank comparison  
-5. Fit Cox PH model  
-6. Test PH assumptions  
-7. Generate clear visualizations and interpretations  
+1. Perform data cleaning  
+2. Conduct exploratory data analysis  
+3. Estimate survival curves (KM) by treatment groups  
+4. Compare groups using the Log-Rank test  
+5. Fit a Cox PH model  
+6. Check PH assumptions using Schoenfeld residuals  
+7. Produce visualizations and clinical interpretation
 
 ---
 
 ## **6️⃣ Methodology** 🛠️
 
 ### **6.1 Data Preparation**
-
-- Cleaned column names for compatibility.  
-- Encoded TrialArm and Gender numerically.  
-- Ensured `time` and `event` are numeric.  
+- Cleaned column names (`APACHE II Score` → `APACHEII`, `TLC Day 1` → `TLC_D1`).  
+- Encoded `TrialArm` and `Gender` into numeric variables.  
+- Ensured `time` and `event` were numeric for survival modelling.  
 - **Model variables:** `time`, `event`, `Age`, `APACHEII`, `TLC_D1`, `TrialArm_num`, `Gender_binary`.
 
-**Handling Missing Values**  
-- Median imputation for APACHEII and TLC_D1 (robust to skewed clinical values).
+**Handling missing values:**  
+- Median imputation used for missing values in `APACHEII` and `TLC_D1`, chosen for robustness against skewed clinical data.
 
 ---
 
 ### **6.2 Exploratory Data Analysis (EDA)** 🔍
 
 **Baseline Summary**
-- N = 106, Events = 10  
+- N = 106, VAP events = 10  
 - Mean Age ≈ 47.6  
-- Mean APACHEII ≈ 16.9  
-- Mean TLC Day1 ≈ 15,216  
-- Arm1 = 61, Arm2 = 45  
+- APACHE II mean ≈ 16.9  
+- TLC Day1 ≈ 15,216  
+- Arm1 = 61 patients, Arm2 = 45  
 - Male = 93, Female = 13  
-- Average follow-up ≈ 5.7 days  
+- Mean follow-up ≈ 5.7 days  
 
 **Visual Exploration**
-- **Age Histogram:** Wide adult distribution.  
-- **APACHE II Histogram:** Most between 10–20.  
-- **TLC Day1 Boxplot:** Elevated counts typical for ICU.
+- **1. Age Histogram:** Wide and evenly spread adult age range.  
+- **2. APACHE II Histogram:** Most patients fall between scores 10–20.  
+- **3. TLC Day 1 Boxplot:** High inflammatory markers typical of ICU presentations.
 
 **Life Tables**
-- Early time points show almost no events.  
-- Most VAP events occur between days 5–10.
+- Early days show minimal events; most VAP cases appear between Days 5–10.  
+- Cumulative hazard slightly higher in Arm 1.
 
-**Event / Censoring**
-- Heavy censoring due to discharge, LAMA, or death.
+**Event / Censoring Structure**
+- Majority of patients are censored due to discharge, LAMA or death—expected in ICU studies.
 
 **Survival Visual Checks**
-- KM curves (overall + by arm) confirm readiness for modelling.
+- KM curves (overall and arm-wise) verify data suitability before modelling.
 
 ---
 
 ### **6.3 Survival Modelling**
-- KM curves (overall and stratified)  
+Methods applied:
+- Kaplan–Meier survival curves  
+- KM comparison by arm  
 - Log-Rank test  
-- Cox PH multivariable model  
-- PH assumption testing (Schoenfeld residuals)
+- Cox PH model  
+- Schoenfeld residual checks
 
 ---
 
@@ -163,11 +167,11 @@ This project evaluates **0.12% vs 0.20% chlorhexidine** in preventing VAP in ven
 
 ## **8️⃣ Key Visualizations** 📊
 
-- KM curves (overall and by arm)  
-- Life tables  
+- Life Tables (overall and per-arm)  
+- Overall Kaplan–Meier survival curve  
+- Stratified KM curves with CI  
 - Schoenfeld residual plots  
-- Cox model summary  
-- Forest-style HR table  
+- Forest-style hazard ratio summary  
 
 ---
 
@@ -178,7 +182,7 @@ This project evaluates **0.12% vs 0.20% chlorhexidine** in preventing VAP in ven
   <img src="results/km_overall.png" width="600">
 </div>
 
-VAP-free survival remains above 90% during the observation window, reflecting low event count and early censoring.
+VAP-free survival remained above **90%** throughout the 10-day observation. Most patients remained event-free.
 
 ---
 
@@ -187,14 +191,16 @@ VAP-free survival remains above 90% during the observation window, reflecting lo
   <img src="results/km_by_arm.png" width="600">
 </div>
 
-- Arm 1: more drops in survival  
-- Arm 2: fewer events  
-- Visual trend favors 0.20%, but statistical testing required.
+- Arm 1 showed slightly more drops in survival (events = 7)  
+- Arm 2 appeared flatter with fewer events (events = 2)  
+- Visual difference exists, but statistical testing is required.
 
 ---
 
 ### **3. Log-Rank Test**  
-- **p = 0.94** → No statistically significant difference in survival curves.
+- **p = 0.94**  
+- No statistically significant difference between treatment arms.  
+- Similar timing of events results in overlapping curves.
 
 ---
 
@@ -203,62 +209,70 @@ VAP-free survival remains above 90% during the observation window, reflecting lo
   <img src="results/cox_summary.png" width="600">
 </div>
 
-- TrialArm HR = **0.97**, p = **0.97** → No measurable hazard difference  
-- Other predictors also insignificant (HR ≈ 1.0)  
-- Concordance ≈ 0.59  
+- TrialArm HR = **0.97**, p = 0.97 → no measurable hazard difference  
+- Age, APACHEII, TLC_D1, Gender all have HR ≈ 1.0  
+- Model concordance = 0.59
 
 ---
 
-### **5. PH Assumption**  
+### **5. PH Assumption Checks**  
 <div align="center">
   <img src="results/cox_ph.png" width="600">
 </div>
 
-- All covariates satisfy PH assumption (p > 0.05).
+- All variables show **p > 0.05**  
+- No evidence of PH violation  
+- Cox model assumptions are valid
 
 ---
 
-### **Summary Table (Selected)**  
-- Survival @ Day 5: Arm1 ≈ 0.919 | Arm2 ≈ 0.902  
-- Events (filtered dataset): Arm1 = 6 | Arm2 = 4  
-- TrialArm HR ≈ 0.97  
+### **Selected Summary**
+- **Day-5 survival:** Arm1 ≈ 0.919 | Arm2 ≈ 0.902  
+- **Events:** Arm1 = 6 | Arm2 = 4  
+- **TrialArm HR:** 0.97  
 
 ---
 
 ## **🔟 Discussion** 💬
 
-Both chlorhexidine concentrations maintained high VAP-free survival. Although the 0.20% arm showed fewer events, the survival curves and hazard timelines were similar, which is reflected by the non-significant log-rank and Cox results.
+Both chlorhexidine concentrations demonstrated consistently high VAP-free survival. While 0.20% had fewer raw VAP events, the time-to-event pattern was similar, and formal tests (Log-Rank, Cox PH) did not indicate a statistically significant difference.
 
-The Cox model yielded HRs close to one for all predictors, and PH checks confirmed time-independent effects. These findings align with clinical expectations—chlorhexidine supports oral hygiene, and both concentrations performed similarly in this dataset.
+All hazard ratios were stable and close to 1.0, and PH checks confirmed that predictor effects remained constant over time. Clinically, these findings align with the understanding that chlorhexidine supports oral hygiene and helps maintain a low VAP incidence, with both concentrations performing effectively.
 
-Survival analysis added structure by evaluating timing, hazards, and group comparisons beyond simple event counts.
+Survival modelling provided structured insights into timing, hazard behaviour and treatment comparison beyond simple event counts.
 
 ---
 
 ## **1️⃣1️⃣ Conclusion** ✅
 
-- Both chlorhexidine strengths show high VAP-free survival.  
-- No statistically significant difference between 0.12% and 0.20% in time-to-VAP.  
-- No strong predictors of VAP identified.  
-- Survival modelling effectively supports clinical interpretation.
+- Both chlorhexidine concentrations provided strong VAP prevention during the observation period.  
+- 0.20% showed fewer events numerically, but survival analysis did not demonstrate statistical superiority.  
+- Baseline variables (Age, APACHEII, TLC_D1, Gender, TrialArm) were not strong predictors of VAP risk.  
+- Survival analysis remains valuable for evaluating treatment performance and informing clinical decisions.
 
 ---
 
 ## **1️⃣2️⃣ Future Work** 🔭
 
-- Include time-varying covariates  
-- Fit parametric survival models  
-- Apply machine-learning survival methods  
-- Validate on external ICU datasets  
-- Explore competing-risk analysis  
+Future extensions:
+
+- Time-varying covariates (daily TLC or microbial load)  
+- Parametric survival models (Weibull, exponential)  
+- Machine-learning models (Random Survival Forests, DeepSurv)  
+- External validation using ICU datasets (MIMIC)  
+- Competing-risk modelling (VAP vs death)
 
 ---
 
-### Contact / Citation  
-- Original study: *Nagesh Vyas, Priya Mathur, Shailesh Jhawar, Akash Prabhune, Pradeep Vimal (2021).*  
+### **Contact / Citation**
+- Original paper: *Nagesh Vyas, Priya Mathur, Shailesh Jhawar, Akash Prabhune, Pradeep Vimal (2021).*
 - Notebook: `Chlorhexidine_Trials.ipynb`  
-- PDF: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`
+- Case study PDF: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`
 
 ---
 
 **End of README**
+
+
+## **7️⃣ Python Implementation Structure** 💻
+
