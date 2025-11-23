@@ -1,10 +1,8 @@
 <p align="center">
 
   <!-- BADGES -->
-  <img src="https://img.shields.io/badge/Project-Type%20-%20Healthcare%20Analytics-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/Survival%20Analysis-Kaplan--Meier%2C%20Cox%20PH-orange?style=for-the-badge">
   <img src="https://img.shields.io/badge/Python-3.10+-yellow?style=for-the-badge&logo=python">
-  <img src="https://img.shields.io/badge/Jupyter-Notebook-DA5B0B?style=for-the-badge&logo=jupyter">
   <img src="https://img.shields.io/badge/Libraries-lifelines%2C%20pandas%2C%20matplotlib-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/Data-Clinical%20Trial%20(Chlorhexidine)-purple?style=for-the-badge">
   <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge">
