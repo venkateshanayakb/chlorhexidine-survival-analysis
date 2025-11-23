@@ -126,18 +126,13 @@ Illustrated the severity distribution across participants. This variable is cruc
 Provided a quick view of inflammatory burden and detected any extreme leukocyte values.
 
 These plots help verify that the distributions reflect real-world clinical patterns and are suitable for inclusion in the survival model.
+Life Tables (Overall and Arm-wise)
 
-Life Tables (Overall and by Trial Arm)
+• Early time points show almost no events → both arms initially behave similarly.
+• Events appear later in the course (days 5–10), reflecting that VAP typically develops after prolonged intubation.
+• Arm 1 shows higher cumulative hazard than Arm 2.
 
-Using survival_table_from_events, the script generated:
-
-• Overall life table
-Showing number at risk, number of events, and censored cases at each time point.
-
-• Arm-wise life tables
-Separate tables for 0.12 percent and 0.20 percent trial arms, providing a granular look at how risk and censoring behaved across arms.
-
-Life tables serve as the foundation of survival analysis, allowing inspection of raw event patterns before fitting KM curves.
+The life tables confirm what the KM curves visually represent.
 
 Event and Censoring Structure
 
@@ -184,6 +179,8 @@ The analysis provides a complete view of how patients in both chlorhexidine grou
 
 1. Kaplan–Meier Survival Curves (Overall)
 
+<div align="center"> <img src="results/km_overall.png" width="600"> </div>
+
 The overall KM curve represents the probability of remaining VAP-free over the study period (up to 10 days). The curve stays close to 1.0 for most time points, indicating that:
 
 • VAP incidence in this trial is low,
@@ -195,6 +192,8 @@ Clinically, this matches the original RCT, where only 9 total VAP cases occurred
 High VAP-free survival means both interventions are relatively protective in an ICU environment with strict oral-care protocols.
 
 2. Kaplan–Meier Curves Stratified by Treatment Arm
+
+<div align="center"> <img src="results/km_by_arm.png" width="600"> </div>
 
 When split by group:
 
@@ -213,23 +212,7 @@ Chlorhexidine 0.20 percent is associated with better VAP-free survival than 0.12
 
 Even though the difference visually appears modest, survival curves reveal divergence consistent with the numeric outcomes.
 
-3. Life Tables (Overall and Arm-wise)
-
-Life tables show for each time point:
-
-• Number at risk
-• Number of events (VAP)
-• Number censored
-
-Interpretation:
-
-• Early time points show almost no events → both arms initially behave similarly.
-• Events appear later in the course (days 5–10), reflecting that VAP typically develops after prolonged intubation.
-• Arm 1 shows higher cumulative hazard than Arm 2.
-
-The life tables confirm what the KM curves visually represent.
-
-4. Log-Rank Test (P = 0.94)
+3. Log-Rank Test (P = 0.94)
 
 • A p-value this high means that the survival curves of the two groups are almost identical statistically.
 • There is no evidence of a difference in VAP-free survival between the arms based on time-to-event patterns.
@@ -261,7 +244,9 @@ the log-rank test with p = 0.94 shows no statistically detectable difference in 
 
 Both groups appear similar in their hazard timeline, and the low number of VAP events limits the test’s ability to identify differences.
 
-5. Cox Proportional Hazards Model (Multivariable)
+4. Cox Proportional Hazards Model (Multivariable)
+
+<div align="center"> <img src="results/cox_summary.png" width="600"> </div>
 
 The Cox model was fitted using 106 patients and 10 VAP events. Due to the very low number of events, all predictors show wide confidence intervals and non-significant p-values.
 
@@ -286,7 +271,9 @@ The Cox model does not find statistically significant predictors of VAP, mainly 
 Even though Arm 2 has fewer raw VAP cases (2 vs 7), the survival timing is similar, so the model cannot detect a difference.
 Clinically, the trend still favors 0.20 percent chlorhexidine, but statistically the model is underpowered to confirm it.
 
-Proportional Hazards Assumption – Clear Interpretation
+5. Proportional Hazards Assumption – Clear Interpretation
+
+<div align="center"> <img src="results/cox_ph.png" width="600"> </div>
 
 The proportional hazards assumption was checked for all covariates using Schoenfeld residuals.
 Across all variables, the p-values are well above 0.05, which means:
@@ -296,7 +283,10 @@ Across all variables, the p-values are well above 0.05, which means:
 The effect of each predictor on the hazard of developing VAP is constant over time, and the Cox model is valid.
 
 Variable-wise Interpretation
+
 APACHE II
+
+<div align="center"> <img src="results/ph_apache2.png" width="600"> </div>
 
 p-values: 0.91 (km), 0.85 (rank)
 • Residuals fluctuate around zero with no clear trend.
@@ -304,11 +294,15 @@ p-values: 0.91 (km), 0.85 (rank)
 
 Age
 
+<div align="center"> <img src="results/ph_age.png" width="600"> </div>
+
 p-values: 0.97 (km), 0.94 (rank)
 • Lines remain flat and centered.
 • ✔ PH assumption holds.
 
 TLC Day 1
+
+<div align="center"> <img src="results/ph_TLCD1.png" width="600"> </div>
 
 p-values: 0.44 (km), 0.48 (rank)
 • Changes over time are minimal.
@@ -316,11 +310,15 @@ p-values: 0.44 (km), 0.48 (rank)
 
 Gender
 
+<div align="center"> <img src="results/ph_gender.png" width="600"> </div>
+
 p-values: 0.26 (km), 0.97 (rank)
 • Curves show no systematic time trend.
 • ✔ PH assumption holds.
 
 TrialArm (0.12 percent vs 0.20 percent)
+
+<div align="center"> <img src="results/ph_Trial_arm.png" width="600"> </div>
 
 p-values: 0.09 (rank), 0.05 (km)
 • Borderline but still above the standard 0.05 threshold.
@@ -337,6 +335,7 @@ This means:
 ✔ No variable needs time-dependent adjustment
 
 Overall Results & Interpretation
+
 Survival probabilities at 30, 60, 90 days
 
 The follow-up period in this dataset is only 10 days, so survival probabilities at 30, 60, and 90 days cannot be directly estimated.
