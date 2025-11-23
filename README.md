@@ -176,9 +176,11 @@ ph_TLCD1.png
 ph_Trial_arm.png
 
 📄 Chlorhexidine_Trials.ipynb
+<br>
 📄 LICENSE
+<br>
 📄 README.md
-
+<br>
 ---
 
 ## **8️⃣ Key Visualizations** 📊
