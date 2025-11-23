@@ -2,11 +2,11 @@
 
 This project is based on a real clinical trial case study titled  
 **“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12 percent and 0.2 percent Concentration on Incidence of VAP”**  
-published in *Annals of International Medical and Dental Research (2021)*.  
-The complete article is included in this repository as **V7N3_e4a9253f-6b0b-4153-a4a4-7ef730d0ac80.pdf**.  
-(If needed locally use: `/mnt/data/V7N3_e4a9253f-6b0b-4153-a4a4-7ef730d0ac80.pdf`)
+published in *Annals of International Medical and Dental Research, Vol (7), Issue (3) 2021*.  
+The complete article is included in this repository as **Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf**.  
+(If needed locally use: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`)
 
-This repository reproduces and interprets **time-to-VAP (Ventilator-Associated Pneumonia)** outcomes using classical Survival Analysis methods in Python. All results, tables, and plots are generated via the notebook / script **Chlorhexidine_Trials.ipynb** / `analysis.py`.
+This repository reproduces and interprets **time-to-VAP (Ventilator-Associated Pneumonia)** outcomes using classical Survival Analysis methods in Python. All results, tables, and plots are generated via the **Chlorhexidine_Trials.ipynb** / .
 
 ---
 
@@ -39,12 +39,7 @@ This project analyses patient-level data from a randomized controlled trial comp
 | APACHEII | Severity score | Continuous |
 | TLC_D1 | Day-1 leukocyte count | Continuous |
 | time | Time to VAP / censor | Continuous |
-| event | 1 = VAP, 0 = censored | Binary |
-
-### **📘 Data Dictionary (visual)**
-<div align="center">
-  <img src="data/Data_Dictionary.png" width="600" alt="Data Dictionary">
-</div>
+| event | 1 = VAP, 0 = NO VAP | Binary |
 
 ---
 
@@ -129,14 +124,36 @@ Applied methods:
 
 ## **7️⃣ Python Implementation Structure** 💻
 
+.
+├── data/
+│   ├── Chlorhexidine Trials.xlsx
+│   ├── Data_Dictionary.png
+│   ├── Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf
+│   ├── Raw Data from Chlorhexidine Trial.xlsx
+│
+├── results/
+│   ├── cox_ph.png
+│   ├── cox_summary.png
+│   ├── km_by_arm.png
+│   ├── km_overall.png
+│   ├── ph_TLCD1.png
+│   ├── ph_Trial_arm.png
+│   ├── ph_age.png
+│   ├── ph_apache2.png
+│   ├── ph_gender.png
+│
+├── Chlorhexidine_Trials.ipynb
+├── LICENSE
+├── README.md
+
 
 ---
 
 ## **8️⃣ Key Visualizations** 📊
 
+- Life tables (overall and per-arm)  
 - Overall Kaplan–Meier survival curve  
 - Kaplan–Meier curves by treatment arm (with CI)  
-- Life tables (overall and per-arm)  
 - Schoenfeld residual plots for PH checks  
 - Forest-style table of hazard ratios
 
@@ -234,23 +251,10 @@ Potential next steps to expand the analysis:
 
 ---
 
-## **1️⃣3️⃣ GitHub Repository Requirements** ✅
-
-Make sure your repo contains:
-
-- `README.md` (this file)  
-- Clean scripts / notebook (`Chlorhexidine_Trials.ipynb`, `analysis.py`, or individual modules)  
-- `requirements.txt` (lifelines, pandas, numpy, matplotlib, seaborn)  
-- Plots and tables saved in `/results/` (KM plots, Cox summary, PH plots, CSV tables)  
-- Clear markdown cells and comments explaining each step  
-- Citations: lifelines documentation and the original RCT paper
-
----
-
 ### Contact / Citation
-- Original trial paper: *Vyas N, Mathur P, Jhawar S, Prabhune A, Vimal P. (2021).*  
-- Notebook / script: `Chlorhexidine_Trials.ipynb` (see `/notebooks`)  
-- Case study PDF local path (if needed): `/mnt/data/V7N3_e4a9253f-6b0b-4153-a4a4-7ef730d0ac80.pdf`
+- Original trial paper: *Nagesh Vyas, Priya Mathur, Shailesh Jhawar, Akash Prabhune, Pradeep Vimal (2021).*  
+- script: `Chlorhexidine_Trials.ipynb` 
+- Case study PDF local path : `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`
 
 ---
 
