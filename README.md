@@ -1,3 +1,31 @@
+<p align="center">
+
+  <!-- PROJECT TITLE -->
+  <h1><b>🧪 Survival Analysis of Chlorhexidine Trial Outcomes Using Python 📈</b></h1>
+
+  <!-- BADGES -->
+  <img src="https://img.shields.io/badge/Project-Type%20-%20Healthcare%20Analytics-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Survival%20Analysis-Kaplan--Meier%2C%20Cox%20PH-orange?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Python-3.10+-yellow?style=for-the-badge&logo=python">
+  <img src="https://img.shields.io/badge/Jupyter-Notebook-DA5B0B?style=for-the-badge&logo=jupyter">
+  <img src="https://img.shields.io/badge/Libraries-lifelines%2C%20pandas%2C%20matplotlib-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Data-Clinical%20Trial%20(Chlorhexidine)-purple?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge">
+  <br>
+
+  <!-- FANCY ICONS -->
+  <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-medical-health-care-flaticons-lineal-color-flat-icons.png" width="60">
+  <img src="https://img.icons8.com/color/64/000000/data-configuration.png" width="60">
+  <img src="https://img.icons8.com/color/64/000000/combo-chart--v1.png" width="60">
+  <img src="https://img.icons8.com/external-outline-juicy-fish/64/000000/external-research-laboratory-outline-outline-juicy-fish.png" width="60">
+  <img src="https://img.icons8.com/fluency/64/000000/statistics.png" width="60">
+
+</p>
+
+<hr>
+
+
+
 # **Survival Analysis of Chlorhexidine Trial Outcomes Using Python** 🧪📈
 
 This project is based on a real clinical trial case study titled  
