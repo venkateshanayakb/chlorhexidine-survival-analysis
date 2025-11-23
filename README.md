@@ -224,6 +224,10 @@ Overall VAP-free survival remains high (≈ >90%) over the observed follow-up (�
 
 - **All p > 0.05** → PH assumption holds for all variables.
 
+The **Cox Summary** reports the fitted model results, including hazard ratios, confidence intervals, and p-values. In this analysis, all predictors (Age, APACHE II, TLC Day 1, Gender, TrialArm) show HR values close to 1 and p > 0.45, indicating no significant effect on VAP hazard.  
+The **Cox PH Test** evaluates whether the proportional hazards assumption holds. All variables have p > 0.05, meaning their effects remain constant over time and the model is valid.  
+In short, the Cox Summary describes *what the model found*, while the PH Test confirms *whether those results can be trusted*.
+
 ---
 
 ## **🔟 Discussion** 💬
