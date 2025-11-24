@@ -26,7 +26,7 @@ This project is based on a real clinical trial case study titled
 **“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12% and 0.2% Concentration on Incidence of VAP”**  
 published in *Annals of International Medical and Dental Research, Vol (7), Issue (3) 2021*.  
 The complete article is included in this repository as **Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf**.  
-(If needed locally use: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`)
+(If needed locally use: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`)[Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash](Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash)
 
 This repository reproduces and interprets **time-to-VAP (Ventilator-Associated Pneumonia)** outcomes using classical Survival Analysis methods in Python. All results, tables, and plots are generated via the **Chlorhexidine_Trials.ipynb**.
 
