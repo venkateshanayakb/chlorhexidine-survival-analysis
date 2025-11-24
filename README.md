@@ -223,7 +223,7 @@ Applied methods:
 ### **4. Cox Proportional Hazards (Multivariable)**  
 
 <div align="center">
-  <img src="results/cox_summary.png" width="600" alt="Cox summary">
+  <img src="results/cox_summary.png" width="800" alt="Cox summary">
 </div>
 
 - The **Cox Proportional Hazards** reports the fitted model results, including hazard ratios, confidence intervals, and p-values. 
@@ -236,7 +236,7 @@ Applied methods:
 
 ### **5. Proportional Hazards Assumption**  
 <div align="center">
-  <img src="results/cox_ph.png" width="600" alt="PH checks">
+  <img src="results/cox_ph.png" width="800" alt="PH checks">
 </div>
 
 - The **Proportional Hazards Assumption** evaluates whether the proportional hazards assumption holds. All variables have p > 0.05, meaning their effects remain constant over time and the model is valid.  
