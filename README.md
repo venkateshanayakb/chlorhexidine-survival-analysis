@@ -11,6 +11,8 @@
   <img src="https://img.shields.io/badge/Python-3.10+-yellow?style=for-the-badge&logo=python">
   <img src="https://img.shields.io/badge/Libraries-lifelines%2C%20pandas%2C%20matplotlib-brightgreen?style=for-the-badge">
   <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
+
 
 </p>
 
@@ -21,7 +23,7 @@
 # **Survival Analysis of Chlorhexidine Trial Outcomes Using Python** 🧪📈
 
 This project is based on a real clinical trial case study titled  
-**“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12 percent and 0.2 percent Concentration on Incidence of VAP”**  
+**“Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash with 0.12% and 0.2% Concentration on Incidence of VAP”**  
 published in *Annals of International Medical and Dental Research, Vol (7), Issue (3) 2021*.  
 The complete article is included in this repository as **Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf**.  
 (If needed locally use: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`)
@@ -113,6 +115,7 @@ The exploratory steps performed in the analysis include:
 - Arm1 n = 61, Arm2 n = 45  
 - Male n = 93, Female n = 13  
 - Mean follow-up time ≈ 5.7 days
+- Event rate = 9.4 percent (10 of 106 patients)
 
 **Visual exploration**
 - **1. Age Distribution (Histogram)** – wide adult range, no extreme clustering.  
@@ -174,7 +177,8 @@ Applied methods:
 - Overall Kaplan–Meier survival curve  
 - Kaplan–Meier curves by treatment arm (with CI)  
 - Schoenfeld residual plots for PH checks  
-- Forest-style table of hazard ratios  
+- Forest-style table of hazard ratios
+- 
 
 ---
 
@@ -185,7 +189,10 @@ Applied methods:
   <img src="results/km_overall.png" width="600" alt="Overall KM">
 </div>
 
-Overall VAP-free survival remains high (≈ >90%) over the observed follow-up (≤10 days).
+- The Kaplan Meier curve shows high VAP free survival, starting at 1.00 and remaining above 0.90 through most of the 10 day follow up period.
+- Small drops occur around days 3 to 6, reflecting only 10 total VAP events out of 106 patients.
+- The final survival probability at day 10 is approximately 0.78, indicating that most patients remained VAP free.
+- The narrow shaded confidence band early on and wider band later reflect increasing uncertainty as fewer patients remain under observation.
 
 ---
 
@@ -194,9 +201,10 @@ Overall VAP-free survival remains high (≈ >90%) over the observed follow-up (�
   <img src="results/km_by_arm.png" width="600" alt="KM by arm">
 </div>
 
-- Arm 1 (0.12%): more drops in the curve (7 VAP events)  
-- Arm 2 (0.20%): flatter curve (2 VAP events)  
-- Visual trend favors 0.20%.
+- Both arms maintain high VAP free survival, remaining above 0.90 through most of the 10 day follow up.
+- Arm 1 ends with a survival probability around 0.78, while Arm 2 remains slightly higher at around 0.92, though both curves overlap heavily.
+- Only 10 total events occurred, causing wide confidence bands and limiting precision in comparing arms.
+- The overall log rank p value of 0.94 indicates no statistically meaningful difference in VAP free survival between the two concentrations.
 
 ---
 
@@ -207,14 +215,17 @@ Overall VAP-free survival remains high (≈ >90%) over the observed follow-up (�
 ---
 
 ### **4. Cox Proportional Hazards (Multivariable)**  
+
 <div align="center">
   <img src="results/cox_summary.png" width="600" alt="Cox summary">
 </div>
 
-- **TrialArm HR = 0.97 (p = 0.97)** → no detectable hazard difference between concentrations.  
-- All predictors show HR ≈ 1 and are not statistically significant.  
-- Concordance = 0.59.
-
+- The **Cox Proportional Hazards** reports the fitted model results, including hazard ratios, confidence intervals, and p-values. 
+- All predictors (Age, APACHE II, TLC Day 1, Gender, TrialArm) show HR values close to 1 and p > 0.45, indicating no significant effect on VAP hazard.
+- *TrialArm_num HR = 0.97* (95 percent CI 0.24 to 3.89, p = 0.97) indicates no measurable difference in hazard between the two interventions.  
+- Only 10 events among 106 patients lead to wide confidence intervals, reducing precision of estimates.
+- Model concordance is 0.59, suggesting weak predictive ability due to the low event rate.
+  
 ---
 
 ### **5. Proportional Hazards Assumption**  
@@ -222,23 +233,28 @@ Overall VAP-free survival remains high (≈ >90%) over the observed follow-up (�
   <img src="results/cox_ph.png" width="600" alt="PH checks">
 </div>
 
-- **All p > 0.05** → PH assumption holds for all variables.
-
-The **Cox Summary** reports the fitted model results, including hazard ratios, confidence intervals, and p-values. In this analysis, all predictors (Age, APACHE II, TLC Day 1, Gender, TrialArm) show HR values close to 1 and p > 0.45, indicating no significant effect on VAP hazard.  
-The **Cox PH Test** evaluates whether the proportional hazards assumption holds. All variables have p > 0.05, meaning their effects remain constant over time and the model is valid.  
-In short, the Cox Summary describes *what the model found*, while the PH Test confirms *whether those results can be trusted*.
+- The **Proportional Hazards Assumption** evaluates whether the proportional hazards assumption holds. All variables have p > 0.05, meaning their effects remain constant over time and the model is valid.  
+- the Cox Summary describes *what the model found*, while the PH Test confirms *whether those results can be trusted*.
+- All covariates have KM p > 0.26 and rank p > 0.09, indicating no violation of the proportional hazards assumption.
+- APACHEII (p = 0.91), Age (p = 0.97), TLC_D1 (p = 0.44), and Gender (p = 0.26) show stable hazard patterns over time.
+- TrialArm_num shows the lowest p value (KM p = 0.05, rank p = 0.09) but still does not cross the significance threshold.
+- Since all PH tests are > 0.05, the Cox model assumptions are satisfied.
+- The PH test confirms that the model’s estimated effects are valid and time-independent.
 
 ---
 
-### **5. Forest plot for Cox proportional hazards model**  
+### **6. Forest plot for Cox proportional hazards model**  
 <div align="center">
   <img src="results/cox_forest.png" width="600" alt="Cox forest">
 </div>
 
-The **Cox proportional hazards model** produced hazard ratio estimates for APACHEII, Age, TLC Day 1, Gender and TrialArm. Visual inspection of the **forest plot** shows no clear, precise protective or harmful effect of the trial arm on hazard.
+- The **Cox proportional hazards model** shows no clear or precisely estimated treatment effect. 
+- The hazard ratio for the trial arm is close to 1 with a confidence interval crossing 1, indicating no detectable change in hazard.
+- Other covariates, especially Gender, display wide confidence intervals, reflecting high uncertainty and limited event information.
+- Overall, the model suggests small effect sizes and imprecise estimates due to low event counts.
 
 ---
-### **6. Nelson Aalen cumulative hazard plots**  
+### **7. Nelson Aalen cumulative hazard plots**  
 <div align="center">
   <img src="results/nelson_overall.png" width="600" alt="Nelson Overall">
 </div>
@@ -247,8 +263,12 @@ The **Cox proportional hazards model** produced hazard ratio estimates for APACH
   <img src="results/nelson_by_arm.png" width="600" alt="Nelson By Arm">
 </div>
 
-**Nelson Aalen cumulative hazard plots** reveal that events are few and occur in clusters. The cumulative hazard trajectories for both treatment arms follow a similar pattern, *consistent with a small or absent treatment effect on event hazard* in this dataset.
-
+- **Nelson Aalen cumulative hazard plots** reveal that events are few and occur in clusters.
+- The curves rise in small, sudden steps, showing that only a few VAP events occurred and they were clustered at specific days.
+- Both treatment arms have almost identical cumulative hazard levels across the timeline.
+- Neither arm shows a consistently higher or lower hazard pattern.
+- The overall interpretation is that event rates are low and the two arms behave similarly in terms of accumulated risk.
+  
 ---
 
 ## **🔟 Discussion** 💬
@@ -263,10 +283,10 @@ These results align with clinical knowledge that chlorhexidine is effective in m
 
 ## **1️⃣1️⃣ Conclusion** ✅
 
-- Both chlorhexidine strengths support good VAP-free survival.  
-- The 0.20% arm showed fewer raw events, but survival analysis did not show significant time-to-event differences.  
-- No baseline predictor emerged as a meaningful driver of hazard.  
-- Survival modelling provided structured insights into hazard behaviour and patient trajectories.
+- Both chlorhexidine concentrations maintained high VAP free survival across the 10 day follow up.
+- The 0.20 percent arm showed fewer raw VAP events, but Kaplan Meier curves and the log rank test (p = 0.94) demonstrated no meaningful difference in time to VAP between groups.
+- Cox modelling confirmed that baseline predictors including age, APACHE II, TLC Day 1, gender and trial arm had hazard ratios near 1 with no significant effects.
+- The overall pattern indicates low event rates and comparable risk profiles for both concentrations within the short observation window.
 
 ---
 
@@ -280,12 +300,16 @@ These results align with clinical knowledge that chlorhexidine is effective in m
 
 ---
 
-### **Contact / Citation**
+### **Citation**
 - Original trial paper: *Nagesh Vyas, Priya Mathur, Shailesh Jhawar, Akash Prabhune, Pradeep Vimal (2021).*  
 - Notebook: `Chlorhexidine_Trials.ipynb`  
 - Case study PDF path: `/data/Effectiveness of Oral Hygiene with Chlorhexidine Mouthwash.pdf`
 
 ---
 
+### **License**
+- This project is licensed under the MIT License.
+- You are free to use, modify, distribute, and build upon this work, provided that the original license is included with any copies or substantial portions of the software.
+- View Full License: [MIT License](LICENSE)
 **End of README**
 
