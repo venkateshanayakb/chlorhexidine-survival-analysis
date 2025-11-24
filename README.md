@@ -147,9 +147,8 @@ Applied methods:
 ---
 
 ## **7️⃣ Python Implementation Structure** 💻
-
 📁 Project Structure
-
+```
 .
 ├── data/
 │   ├── Chlorhexidine Trials.xlsx
@@ -174,7 +173,8 @@ Applied methods:
 ├── Chlorhexidine_Trials.ipynb
 ├── LICENSE
 └── README.md
-
+```
+---
 
 ## **8️⃣ Key Visualizations** 📊
 
