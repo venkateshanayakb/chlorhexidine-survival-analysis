@@ -230,6 +230,27 @@ In short, the Cox Summary describes *what the model found*, while the PH Test co
 
 ---
 
+### **5. Forest plot for Cox proportional hazards model**  
+<div align="center">
+  <img src="results/cox_forest.png" width="600" alt="Cox forest">
+</div>
+
+The **Cox proportional hazards model** produced hazard ratio estimates for APACHEII, Age, TLC Day 1, Gender and TrialArm. Visual inspection of the **forest plot** shows no clear, precise protective or harmful effect of the trial arm on hazard.
+
+---
+### **6. Nelson Aalen cumulative hazard plots**  
+<div align="center">
+  <img src="results/nelson_overall.png" width="600" alt="Nelson Overall">
+</div>
+
+<div align="center">
+  <img src="results/nelson_by_arm.png" width="600" alt="Nelson By Arm">
+</div>
+
+**Nelson Aalen cumulative hazard plots** reveal that events are few and occur in clusters. The cumulative hazard trajectories for both treatment arms follow a similar pattern, *consistent with a small or absent treatment effect on event hazard* in this dataset.
+
+---
+
 ## **🔟 Discussion** 💬
 
 Both chlorhexidine concentrations maintained high VAP-free survival during observation.  
